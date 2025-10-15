@@ -8,7 +8,8 @@ import (
 
 // Config holds all configuration for the application.
 type Config struct {
-	MongoURI string `mapstructure:"MONGO_URI"`
+	MongoURI     string `mapstructure:"MONGO_URI"`
+	GeminiAPIKey string `mapstructure:"GEMINI_API_KEY"`
 }
 
 var AppConfig *Config

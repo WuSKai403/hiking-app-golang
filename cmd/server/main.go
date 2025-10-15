@@ -4,11 +4,15 @@ import (
 	"github.com/WuSKai403/hiking-app-golang/configs"
 	"github.com/WuSKai403/hiking-app-golang/internal/database"
 	"github.com/WuSKai403/hiking-app-golang/internal/server"
+	"github.com/WuSKai403/hiking-app-golang/internal/services"
 )
 
 func main() {
 	// Load configuration
 	configs.LoadConfig()
+
+	// Initialize GenAI client
+	services.InitGenAI()
 
 	// Connect to the database
 	database.Connect(configs.AppConfig.MongoURI)
