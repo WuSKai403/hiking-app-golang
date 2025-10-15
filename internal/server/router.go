@@ -33,7 +33,10 @@ func NewRouter() *gin.Engine {
 		apiV2.GET("/trails", handlers.GetAllTrailsSummary)
 		apiV2.GET("/trails/:id", handlers.GetTrail)
 
-		// Recommendation route
+		// CWA routes
+		apiV2.GET("/cwa/:trail_id", handlers.GetCWAData)
+
+		// Recommendation routes
 		apiV2.POST("/recommendation", handlers.GetRecommendation)
 	}
 

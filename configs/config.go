@@ -10,6 +10,7 @@ import (
 type Config struct {
 	MongoURI     string `mapstructure:"MONGO_URI"`
 	GeminiAPIKey string `mapstructure:"GEMINI_API_KEY"`
+	CwaApiKey    string `mapstructure:"CWA_API_KEY"`
 }
 
 var AppConfig *Config

@@ -17,13 +17,19 @@ func GetRecommendation(c *gin.Context) {
 	}
 
 	// --- Data Fetching ---
-	// TODO: Replace these with actual data fetching logic similar to Python's
-	// get_cwa_data_for_ai and get_hiking_reviews.
-	mockWeatherData := "預報顯示：下午 1 點後有陣雨，夜間氣溫驟降至 10 度，風速 5 級。"
+	// Fetch real CWA data
+	weatherData, err := services.GetCWADataForAI(request.TrailID)
+	if err != nil {
+		// Log the error but proceed with a fallback message for the AI
+		// This makes the service more resilient if CWA fails
+		weatherData = "無法獲取即時天氣資訊。"
+	}
+
+	// TODO: Replace with actual review data fetching
 	mockReviewData := "近期評論 (2025/09/06): 很好的一條路線。 (2025/04/16): 車位充足，步道平緩良好。"
 
 	// --- AI Recommendation ---
-	recommendation, err := services.GetAiRecommendation(request, mockWeatherData, mockReviewData)
+	recommendation, err := services.GetAiRecommendation(request, weatherData, mockReviewData)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get AI recommendation: " + err.Error()})
 		return
