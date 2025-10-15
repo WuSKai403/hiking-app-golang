@@ -27,7 +27,7 @@ func NewRouter() *gin.Engine {
 	router.GET("/ping", handlers.Ping)
 
 	// Group routes for v2
-	apiV2 := router.Group("/api/v2")
+	apiV2 := router.Group("/api")
 	{
 		// Trail routes
 		apiV2.GET("/trails", handlers.GetAllTrailsSummary)
