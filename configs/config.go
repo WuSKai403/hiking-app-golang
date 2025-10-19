@@ -19,16 +19,26 @@ var AppConfig *Config
 func LoadConfig() {
 	AppConfig = &Config{} // Initialize the AppConfig
 
-	viper.AddConfigPath(".")    // Look for config in the current directory
-	viper.SetConfigName(".env") // Name of config file (without extension)
-	viper.SetConfigType("env")  // REQUIRED if the config file does not have the extension in the name
+	// Set default values. This is crucial for Viper to recognize the keys
+	// and be able to override them with environment variables even if the config file is missing.
+	viper.SetDefault("MONGO_URI", "")
+	viper.SetDefault("GEMINI_API_KEY", "")
+	viper.SetDefault("CWA_API_KEY", "")
 
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err != nil {
-		log.Printf("Warning: No .env file found, relying on environment variables: %v", err)
-	}
+	viper.AddConfigPath(".")
+	viper.SetConfigName(".env")
+	viper.SetConfigType("env")
 
 	viper.AutomaticEnv() // Read in environment variables that match
+
+	// Attempt to read the .env file. It's okay if it doesn't exist.
+	if err := viper.ReadInConfig(); err != nil {
+		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
+			log.Println("Info: .env file not found, relying on environment variables.")
+		} else {
+			log.Printf("Warning: Error reading .env file: %v", err)
+		}
+	}
 
 	if err := viper.Unmarshal(AppConfig); err != nil {
 		log.Fatalf("Unable to decode config into struct, %v", err)
