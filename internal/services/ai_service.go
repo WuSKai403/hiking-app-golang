@@ -20,7 +20,7 @@ func InitGenAI() {
 	if err != nil {
 		log.Fatalf("Failed to create GenAI client: %v", err)
 	}
-
+	log.Println("GenAI client initialized successfully.")
 	// Use a model that supports tooling and is available in the v1beta API.
 	// Models like 'gemini-1.5-pro-latest' seem to require a newer API version than the SDK defaults to.
 	// 'gemini-pro' is a stable and widely available choice.
