@@ -17,6 +17,8 @@ var AppConfig *Config
 
 // LoadConfig reads configuration from file or environment variables.
 func LoadConfig() {
+	AppConfig = &Config{} // Initialize the AppConfig
+
 	viper.AddConfigPath(".")    // Look for config in the current directory
 	viper.SetConfigName(".env") // Name of config file (without extension)
 	viper.SetConfigType("env")  // REQUIRED if the config file does not have the extension in the name
@@ -28,7 +30,7 @@ func LoadConfig() {
 
 	viper.AutomaticEnv() // Read in environment variables that match
 
-	if err := viper.Unmarshal(&AppConfig); err != nil {
+	if err := viper.Unmarshal(AppConfig); err != nil {
 		log.Fatalf("Unable to decode config into struct, %v", err)
 	}
 }
